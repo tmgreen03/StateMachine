@@ -9,10 +9,12 @@ namespace Utils.StateMachine
     {
         [SerializeField]
         private List<State<T>> _states;
+        private readonly Dictionary<Type, State<T>> _stateByType = new();
         private State<T> _activeState;
 
         protected virtual void Awake()
         {
+            _states.ForEach(s => _stateByType.Add(s.GetType(),s));
             SetState(_states[0].GetType());
         }
 
